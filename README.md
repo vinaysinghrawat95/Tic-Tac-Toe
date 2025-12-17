@@ -93,5 +93,3 @@ Tic-Tac-Toe/
 ## 👨‍💻 Author
 
 **Vinay Singh Rawat**
-JavaScript Learner
-
