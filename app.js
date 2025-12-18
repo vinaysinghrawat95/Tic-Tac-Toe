@@ -3,6 +3,7 @@ let resetBtn = document.querySelector(".reset-btn");
 let mesgContainer = document.querySelector(".mesg-container");
 let winMesg = document.querySelector("#win-mesg");
 let newGameBtn = document.querySelector("#startBtn");
+let hideGame = document.querySelector(".game");
 
 let turnO = true;
 
@@ -17,9 +18,11 @@ let winPatterns = [
     [2, 4, 6]
 ];
 
-let drawMatch = () =>{
+let drawMatch = () => {
     winMesg.innerText = "Match is Draw!";
     mesgContainer.classList.remove("hide");
+    hideGame.classList.add("hide-game");
+    resetBtn.classList.add("hide-game");
 }
 
 let count = 0;
@@ -28,21 +31,20 @@ btnBoxes.forEach((box) => {
     box.addEventListener("click", () => {
 
         if (turnO) {
+            box.style.color = "#d62828";
             box.innerText = "O";
             turnO = false;
         } else {
-            box.innerText = "X";
             box.style.color = "green";
+            box.innerText = "X";
             turnO = true;
         }
         count++;
-        console.log(count);
-        
         box.disabled = true;
         let isWinner = checkWinner();
 
-        if(count === 9 && !isWinner){
-          drawMatch();
+        if (count === 9 && !isWinner) {
+            drawMatch();
         }
     });
 
@@ -63,6 +65,8 @@ const enableButtons = () => {
 }
 
 const resetGame = () => {
+    hideGame.classList.remove("hide-game");
+    resetBtn.classList.remove("hide-game");
     turnO = true;
     enableButtons();
     count = 0;
@@ -71,6 +75,9 @@ const resetGame = () => {
 const showWinner = (winner) => {
     winMesg.innerText = `Congratulation! Winner is ${winner}`;
     mesgContainer.classList.remove("hide");
+    hideGame.classList.add("hide-game");
+    resetBtn.classList.add("hide-game");
+
     disableButtons();
 }
 
@@ -83,19 +90,11 @@ const checkWinner = () => {
 
         if (pos1val != "" && pos2val != "" && pos3val != "") {
             if (pos1val === pos2val && pos2val === pos3val) {
-                console.log(pos1val);
-                console.log(pos2val);
-                console.log(pos3val);
 
-
-                console.log("Winner Winnner!", pos1val);
                 showWinner(pos1val);
                 return true;
-
             }
         }
-
-
     }
     return false;
 }
